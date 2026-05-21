@@ -5,7 +5,7 @@
 チーズアカデミーを仕様書に忠実に作成しつつ、こだわりのUIを反映できるCSSを追記した入門編level2です。
 
 ## ③アプリのデプロイURL
-デプロイしている場合はURLを記入（任意）
+https://zakatsu.github.io/kadai00_cheese_zacker/
 
 ## ④アプリのログイン用IDまたはPassword（ある場合）
 - なし
