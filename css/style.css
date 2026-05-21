@@ -1,0 +1,685 @@
+/* ここから下に記載していく */
+
+/* 全体の背景色:bodyに追加 */
+body {
+    background-color: #fdf8ee;
+}
+
+html,
+body {
+    overflow-x: clip;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* スマホの場合だけ改行を追加してみやすく */
+.sp-br {
+    display: none;
+}
+
+.pc-br {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .sp-br {
+        display: block;
+    }
+
+    .pc-br {
+        display: none;
+    }
+}
+
+/* 追加：header 「上部に固定」を追加 */
+header,
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.header_logo {
+    height: auto;
+}
+
+.header_logo img {
+    display: block;
+}
+
+.header_nav {
+    font-size: 21px;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    padding: 50px 0;
+}
+
+/* ヘッダーのナビゲーションリンク */
+.header_nav a {
+    color: #222222;
+    text-decoration: none;
+    position: relative;  /* ::after の基準点にする */
+}
+
+/* 下線の実体（初期状態は幅0で非表示） */
+.header_nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffd61a;
+    transition: width 0.3s ease;
+}
+
+/* ホバー時に幅を100%に広げる → 下線がスライドインする */
+.header_nav a:hover::after {
+    width: 100%;
+}
+
+/* ナビゲーションのハンバーガーメニュー対応 */
+
+.hamburger {
+    display: none; /* デフォルトは非表示 */
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger img {
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 1080px) {
+    header {
+        --header-image-height: clamp(48px, 12vw, 80px); /* --header-image-height という変数を使って、ロゴとハンバーガーが同じ比率で画面に収まるようにしている*/
+        padding: 0 clamp(16px, 6vw, 50px);
+    }
+
+    .header_logo img {
+        height: var(--header-image-height);
+        width: auto;
+    }
+
+    .header_nav {
+        display: none; /* ナビゲーションを非表示 */
+        flex-direction: column;
+        gap: 20px;
+        position: absolute;
+        top: 60px; /* ヘッダーの下に表示 */
+        right: 10px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .header_nav:not(.active) {
+        display: none;
+    }
+
+    .header_nav.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block; /* ハンバーガーメニューを表示 */
+        width: var(--header-image-height);
+        height: var(--header-image-height);
+        padding: 0;
+    }
+
+    .hamburger img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+/* メインコンテンツ */
+
+/* コンテンツ共通 */
+.main {
+    width: 100%;
+}
+
+.top-title {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);  
+    font-size: 48px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.top-subtitle {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 32px;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.container {
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    text-align: center;
+}
+
+section {
+    margin-top: 60px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    /* margin-top: 60px; */
+    margin-bottom: 30px;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: #222222;
+    font-weight: normal;
+    margin-bottom: 60px;
+}
+
+p {
+    font-size: 16px;
+    color: #222222;
+    line-height: 1.8;
+}
+
+.title-yellow {
+    color: #ffd61a;
+}
+
+/* メインビジュアル */
+.main_visual {
+    background-image: url("../img/mainbg.png");
+    background-size: cover;
+    background-position: center;
+    
+    width: 100%;
+    aspect-ratio: 1365 / 500;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 30px; */
+}
+
+/* About */
+.about_text {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.about-slideshow {
+    width: 100%;
+    overflow: hidden;
+}
+
+.about-images {
+    display: flex;
+    width: 200%;
+    animation: loop-slide 40s linear infinite;
+}
+
+.about-images img {
+    width: 12.5%;
+    height: auto;
+    object-fit:cover;
+    flex-shrink: 0;
+}
+
+@keyframes loop-slide {
+    from {
+    transform: translateX(0);
+    }
+    to {
+    transform: translateX(-50%);
+    }
+}
+
+/* Course */
+.course_text {
+    margin-bottom: 60px;
+}
+
+.course_content {
+    display: flex;
+    flex-direction: column;
+}
+
+h5 {
+    font-size: 24px;
+    color: #222222;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+/* Course items左画像 */
+.course_item {
+    display: flex;
+}
+
+.course_image,
+.course_description {
+    flex: 1;
+}
+
+.course_image img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.course_description {
+    display: flex;
+    /* background-color: #fafafa; */
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.course_textarea {
+    max-width: 480px;
+    text-align: left;
+    padding-left: 50px;
+}
+
+/* Course items右画像 */
+.course_item_reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.course_image_reverse,
+.course_description_reverse {
+    flex: 1;
+}
+
+.course_image_reverse img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.course_description_reverse {
+    display: flex;
+    /* background-color: #fafafa; */
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.course_textarea_reverse {
+    max-width: 480px;
+    text-align: left;
+    padding-right: 50px;
+}
+
+/* News */
+
+.news_block {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+.news_content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fffdf5;
+    width: 300px;
+    align-items: flex-start;
+    padding: 16px;
+    border-radius: 6px;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 追加：ホバー時の挙動 */
+.news_content:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 追加：画像イメージの調整　参考：https://www.untype.jp/blog/202401291951/ */
+.news_content img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news_date p {
+    font-size: 12px;
+    margin-top: 30px;
+    margin-bottom: 24px;
+}
+
+.news_description p {
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.btn {
+    display: inline-block;
+    width: 300px;
+    height: 60px;
+    background-color: #ffd61a;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: orange;
+    transform: scale(1.05);
+}
+
+/* Access */
+.access_block {
+    background-color: #fafafa;
+    padding: 60px 0px;
+}
+
+.access_table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.access_table th,
+.access_table td {
+    height: 50px;
+    text-align: left;
+    padding-bottom: 30px;
+}
+
+/* 最後の行の下の余白をなくす */
+.access_table tr:last-child th,
+.access_table tr:last-child td {
+    padding-bottom: 0;
+} 
+
+.access_table th {
+    width: 150px;
+    display: flex;
+    align-items: center;
+}
+
+/* Contact */
+
+.contact-text {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 70px;
+}
+
+.form-table {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.form-th {
+    width: 240px;
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 16px;
+    padding-right: 64px;
+    border-right: 1px solid #cacaca;
+}
+
+.form-th-top {
+    vertical-align: top;
+}
+
+.form-td {
+    width: 400px;
+    text-align: left;
+    padding-left: 8px;
+}
+
+.form-th,
+.form-td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    /* border-top: 1px solid #cacaca; */
+    /* border-bottom: 1px solid #cacaca; */
+    box-sizing: border-box;
+}
+
+.form-tr {
+    border-top: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;    
+}
+
+/* 記入欄の枠線を定義 */
+.form-td input[type="text"],
+.form-td input[type="email"],
+.form-td select,
+.form-td textarea {
+    width: 328px;
+    border: 1px solid #bfbfbf;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding-left: 8px;
+}
+
+/* 記入欄の高さを指定 */
+.form-td input[type="text"],
+.form-td input[type="email"] {
+    height: 36px;
+}
+
+.form-td select {
+    height: 60px;
+}
+
+.form-td textarea {
+    height: 120px;
+}
+
+/* チーズアカデミーを知ったきっかけの行間 */
+.mt16 {
+    margin-top: 16px;
+}
+
+/* チェックボックスのスタイル */
+.form-check {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: left;
+}
+
+.form-check input {
+    margin-right: 24px;
+}
+
+.form-check label {
+    font-size: 14px;
+}
+
+#contact{
+    margin-bottom: 140px;
+}
+
+/* SP用表示を集約 */
+@media (max-width: 768px) {
+    .top-title {
+        font-size: clamp(32px, 9vw, 48px);
+        padding: 12px 16px;
+        line-height: 1.2;
+    }
+
+    .top-subtitle {
+        font-size: clamp(20px, 6vw, 32px);
+        padding: 12px 16px;
+        line-height: 1.3;
+    }
+
+    .about_text,
+    .course_text,
+    .contact-text {
+        padding: 0 24px;
+    }
+
+    .course_item,
+    .course_item_reverse {
+        flex-direction: column;
+    }
+
+    .course_textarea,
+    .course_textarea_reverse {
+        max-width: none;
+        padding: 32px 24px;
+    }
+
+    .course_description,
+    .course_description_reverse {
+        justify-content: flex-start;
+    }
+
+    .news_block {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 24px;
+    }
+
+    .news_content,
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .access_table {
+        padding: 0 24px;
+    }
+
+    #contact form {
+        width: 100%;
+    }
+
+    .form-table {
+        display: block;
+        width: 100%;
+        padding: 0 24px;
+        margin-bottom: 30px;
+    }
+
+    .form-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .form-tr,
+    .form-th,
+    .form-td {
+        display: block;
+        width: 100%;
+    }
+
+    .form-tr {
+        padding: 12px 0;
+        border-top: 1px solid #cacaca;
+        border-bottom: none;
+    }
+
+    .form-tr:last-child {
+        border-bottom: 1px solid #cacaca;
+    }
+
+    .form-th {
+        padding: 0 0 12px;
+        border-right: none;
+    }
+
+    .form-th,
+    .form-td {
+        box-sizing: border-box;
+    }
+
+    .form-td {
+        padding: 0;
+    }
+
+    .form-td input[type="text"],
+    .form-td input[type="email"],
+    .form-td select,
+    .form-td textarea {
+        width: 100%;
+    }
+
+    .form-check {
+        gap: 16px;
+    }
+
+    .form-check label {
+        display: flex;
+        align-items: flex-start;
+        line-height: 1.6;
+    }
+
+    .form-check input {
+        flex-shrink: 0;
+        margin: 4px 16px 0 0;
+    }
+
+    p {
+        overflow-wrap: break-word;
+    }
+}
+
+/* フッター */
+.footer {
+    background-color: #707070;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
